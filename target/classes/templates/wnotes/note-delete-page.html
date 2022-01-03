@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options"></head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+    <th:block th:if="${error != null}" th:text="${error}"></th:block>
+    <th:block th:if="${error == null}">
+        <form th:action="@{/wnotes/delete}" th:method="DELETE" th:object="${note}">
+            <h1 class="display-4 fw-bold text-center slide-in-bck-top">Usuwanie notatki</h1>
+            <hr>
+            <p style="font-size: 12px" class="lead mb-4 slide-in-bck-top">Podgląd notatki którą chcesz usunąc, jeśli jesteś zdecydowany wybierz opcję usuń notatkę.</p>
+            <div class="form-floating mb-3">
+                <input type="text" th:field="*{title}" class="form-control" id="floatingInput"
+                       placeholder="Tytuł notatki" readonly>
+                <label for="floatingInput" th:text="'Nazwa notatki: ' + *{title}"></label>
+            </div>
+            <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg slide-in-bck-left">
+                <span th:utext="*{content}"></span>
+            </div>
+            <input type="hidden" th:field="*{id}" th:value="*{id}">
+            <br>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+                <button type="button" class="btn btn-danger btn-lg px-4 gap-3" data-bs-toggle="modal"
+                        data-bs-target="#saveModal">Usuń notatkę
+                </button>
+                <a href="/wnotes/menu">
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Anuluj</button>
+                </a>
+            </div>
+            <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-6 shadow">
+                        <div class="modal-header border-bottom-0">
+                            <h5 class="modal-title" id="saveModalLabel">Czy na pewno usunąc notatkę ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                            <button type="submit" class="btn btn-primary">Tak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:block>
+</div>
+</body>
+</html>

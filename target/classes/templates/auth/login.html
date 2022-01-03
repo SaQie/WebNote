@@ -1,0 +1,51 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options"></head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center text-lg-start slide-in-bck-left">
+            <h1 class="display-4 fw-bold lh-1 mb-3">Logowanie do wNotes</h1>
+            <p class="col-lg-10 fs-4">Ten formularz umożliwia Ci logowanie się do serwisu wNotes, dzięki temu otrzymasz pełen dostęp do serwisu i będziesz mógł korzystać z wszystkich funkcji wNotes czyli notatek online.</p>
+        </div>
+        <div class="col-md-10 mx-auto col-lg-5 fade-in">
+            <form th:action="@{/login}" th:method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+                <h1 class="h3 mb-3 fw-normal">Logowanie</h1>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                    </div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info">
+                        Zostałeś wylogowany.
+                    </div>
+                </div>
+                <div th:if="${resetPassword}">
+                    <div class="alert alert-success">
+                        Pomyślnie zresetowano hasło, możesz się zalogować.
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="username" id="username" required>
+                    <label for="username">Nazwa użytkownika</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="password" id="password" required>
+                    <label for="password">Hasło</label>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Zaloguj się</button>
+                <hr class="my-4">
+                <small class="text-muted">Logując się otrzymasz pełen dostęp do serwisu wNotes</small>
+                <br>
+                <small class="text-muted">Zapomniałeś hasła ? <a href="/forgot_password">Przypomnij hasło</a> </small>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

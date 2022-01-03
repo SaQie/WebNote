@@ -1,0 +1,67 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options"></head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+    <h1 class="display-4 fw-bold text-center slide-in-bck-top">Historia twoich notatek</h1>
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg slide-in-bck-left">
+        <th:block th:if="${noteList == null}">
+            <span style="color:darkred; text-align: center">Wysąpił błąd, skontatkuj się z administratorem.</span>
+        </th:block>
+        <th:block th:if="${noteList.isEmpty()}">
+            <span style="color:darkred; text-align: center">Nie posiadasz notatek.</span>
+        </th:block>
+        <th:block th:if="${!noteList.isEmpty()}">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-center">L.P</th>
+                    <th scope="col" class="text-center">PRYWATNA</th>
+                    <th scope="col" class="text-center">NAZWA</th>
+                    <th scope="col" class="text-center">UUID</th>
+                    <th scope="col" class="text-center">UTWORZONA DNIA</th>
+                    <th scope="col" class="text-center">WYGASA DNIA</th>
+                    <th scope="col" class="text-center">OSTATNIA EDYCJA</th>
+                    <th scope="col" class="text-center">OPERACJA</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="note,status :${noteList}">
+                    <td  class="text-center"  th:text="${status.count} + '.'"></td>
+                    <td class="text-center"  th:if="${note.privateNote} == true"><input type="checkbox" disabled checked></td>
+                    <td class="text-center"  th:if="${note.privateNote} == false"><input type="checkbox" disabled></td>
+                    <th:block th:if="${note.privateNote == true}">
+                        <td class="text-center"  style="color: darkred" th:text="${note.title}"></td>
+                    </th:block>
+                    <th:block th:if="${note.privateNote == false}">
+                        <td class="text-center"  th:text="${note.title}"></td>
+                    </th:block>
+                    <td  class="text-center"  th:text="${note.uuid}"></td>
+                    <td  class="text-center"  th:text="${note.createdDate}"></td>
+                    <td  class="text-center"  th:if="${note.expiredDate != null}" th:text="${note.expiredDate}"></td>
+                    <td  class="text-center"  th:if="${note.expiredDate == null}" th:text="'Nie określono'"></td>
+                    <td  class="text-center"  th:if="${note.updatedDate == null}" th:text="'Nie edytowano'"></td>
+                    <td  class="text-center"  th:if="${note.updatedDate != null}" th:text="${note.updatedDate}"></td>
+                    <td>
+                        <a th:href="${adress} + 'note/' +${note.uuid}">
+                            <button type="button" class="btn btn-primary">Zobacz</button>
+                        </a>
+                        <a th:href="${adress} + 'wnotes/edit/' +${note.uuid}">
+                            <button type="button" class="btn btn-primary">Edytuj</button>
+                        </a>
+                        <a th:href="${adress} + 'wnotes/delete/' +${note.uuid}">
+                            <button type="button" class="btn btn-primary">Usuń</button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

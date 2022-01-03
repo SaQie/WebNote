@@ -1,0 +1,133 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:fragment="options">
+    <meta charset="UTF-8">
+    <title>wNotes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/home_styles.css" th:href="@{/styles/home_styles.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/x9b0uwk9hurr0g0gltpg84kef1h764q1ri2twkvjwfpwl81m/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            skin: 'outside',
+            icons: 'small',
+            toolbar_location: 'bottom',
+            plugins: 'lists code table codesample link',
+            toolbar: 'formatselect | bold italic underline strikethrough bullist link codesample align',
+            menubar: false,
+            statusbar: false
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <img src="https://i.imgur.com/NSeAfeC.png" class="bi me-2" width="40" height="32" role="img"
+                 aria-label="Bootstrap">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li><a href="/home" class="nav-link px-2 link-dark">Strona główna</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a href="/register" class="nav-link px-2 link-dark">Rejestracja</a></li>
+                    <li><a href="/login" class="nav-link px-2 link-dark">Logowanie</a></li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                           class="nav-link px-2 link-dark">Wyloguj się</a></li>
+                </th:block>
+                <li><a href="/wnotes/menu" class="nav-link px-2 link-dark">wNotes Menu</a></li>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-6 shadow">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel">Chcesz się wylogować ?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                                <a href="/logout">
+                                    <button type="button" class="btn btn-primary">Tak</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container my-5">
+    <h1 class="display-4 fw-bold text-center slide-in-bck-top">Historia twoich notatek</h1>
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg slide-in-bck-left">
+        <th:block th:if="${noteList == null}">
+            <span style="color:darkred; text-align: center">Wysąpił błąd, skontatkuj się z administratorem.</span>
+        </th:block>
+        <th:block th:if="${noteList.isEmpty()}">
+            <span style="color:darkred; text-align: center">Nie posiadasz notatek.</span>
+        </th:block>
+        <th:block th:if="${!noteList.isEmpty()}">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-center">L.P</th>
+                    <th scope="col" class="text-center">PRYWATNA</th>
+                    <th scope="col" class="text-center">NAZWA</th>
+                    <th scope="col" class="text-center">UUID</th>
+                    <th scope="col" class="text-center">UTWORZONA DNIA</th>
+                    <th scope="col" class="text-center">WYGASA DNIA</th>
+                    <th scope="col" class="text-center">OSTATNIA EDYCJA</th>
+                    <th scope="col" class="text-center">OPERACJA</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="note,status :${noteList}">
+                    <td  class="text-center"  th:text="${status.count} + '.'"></td>
+                    <td class="text-center"  th:if="${note.privateNote} == true"><input type="checkbox" disabled checked></td>
+                    <td class="text-center"  th:if="${note.privateNote} == false"><input type="checkbox" disabled></td>
+                    <th:block th:if="${note.privateNote == true}">
+                        <td class="text-center"  style="color: darkred" th:text="${note.title}"></td>
+                    </th:block>
+                    <th:block th:if="${note.privateNote == false}">
+                        <td class="text-center"  th:text="${note.title}"></td>
+                    </th:block>
+                    <td  class="text-center"  th:text="${note.uuid}"></td>
+                    <td  class="text-center"  th:text="${note.createdDate}"></td>
+                    <td  class="text-center"  th:if="${note.expiredDate != null}" th:text="${note.expiredDate}"></td>
+                    <td  class="text-center"  th:if="${note.expiredDate == null}" th:text="'Nie określono'"></td>
+                    <td  class="text-center"  th:if="${note.updatedDate == null}" th:text="'Nie edytowano'"></td>
+                    <td  class="text-center"  th:if="${note.updatedDate != null}" th:text="${note.updatedDate}"></td>
+                    <td>
+                        <a th:href="${adress} + 'note/' +${note.uuid}">
+                            <button type="button" class="btn btn-primary">Zobacz</button>
+                        </a>
+                        <a th:href="${adress} + 'wnotes/edit/' +${note.uuid}">
+                            <button type="button" class="btn btn-primary">Edytuj</button>
+                        </a>
+                        <a th:href="${adress} + 'wnotes/delete/' +${note.uuid}">
+                            <button type="button" class="btn btn-primary">Usuń</button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

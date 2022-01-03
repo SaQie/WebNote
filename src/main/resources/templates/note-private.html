@@ -1,0 +1,119 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:fragment="options">
+    <meta charset="UTF-8">
+    <title>wNotes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/home_styles.css" th:href="@{/styles/home_styles.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/x9b0uwk9hurr0g0gltpg84kef1h764q1ri2twkvjwfpwl81m/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            skin: 'outside',
+            icons: 'small',
+            toolbar_location: 'bottom',
+            plugins: 'lists code table codesample link',
+            toolbar: 'formatselect | bold italic underline strikethrough bullist link codesample align',
+            menubar: false,
+            statusbar: false
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <img src="https://i.imgur.com/NSeAfeC.png" class="bi me-2" width="40" height="32" role="img"
+                 aria-label="Bootstrap">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li><a href="/home" class="nav-link px-2 link-dark">Strona główna</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a href="/register" class="nav-link px-2 link-dark">Rejestracja</a></li>
+                    <li><a href="/login" class="nav-link px-2 link-dark">Logowanie</a></li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                           class="nav-link px-2 link-dark">Wyloguj się</a></li>
+                </th:block>
+                <li><a href="/wnotes/menu" class="nav-link px-2 link-dark">wNotes Menu</a></li>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-6 shadow">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel">Chcesz się wylogować ?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                                <a href="/logout">
+                                    <button type="button" class="btn btn-primary">Tak</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container my-5">
+    <form th:action="@{/wnotes/private/note}" method="post">
+        <h1 class="display-4 fw-bold text-center slide-in-bck-top">Notatka prywatna</h1>
+        <hr>
+        <p style="font-size: 12px" class="lead mb-4 slide-in-bck-top">Dodajesz prywatną notatkę</p>
+        <div class="form-floating mb-3">
+            <input type="text" th:field="${notePrivateDTO.title}" class="form-control" id="floatingInput"
+                   placeholder="Tytuł notatki">
+            <label for="floatingInput">Tytuł notatki</label>
+        </div>
+        <p class="error text-danger text-center" th:errors="${notePrivateDTO.content}"></p>
+        <p class="error text-danger text-center" th:errors="${notePrivateDTO.title}"></p>
+        <div class="shadow-lg slide-in-bck-left">
+            <textarea class="textarea-style" style="height: 400px" th:field="${notePrivateDTO.content}"></textarea>
+        </div>
+        <br>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal"
+                    data-bs-target="#saveModal">Zapisz notatkę
+            </button>
+            <a href="/wnotes/menu">
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Anuluj</button>
+            </a>
+        </div>
+        <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-6 shadow">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="saveModalLabel">Zapisać notatkę ?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                        <button type="submit" class="btn btn-primary">Tak</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    </th:block>
+</div>
+</body>
+</html>

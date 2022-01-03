@@ -1,0 +1,113 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options"></head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<th:block sec:authorize="isAnonymous()">
+    <div class="container px-4 py-5">
+        <h2 class="pb-2 border-bottom">wNotes Menu</h2>
+        <p class="text-end">Zalogowany jako: Nie zalogowany</p>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/new/note">
+                    <div>
+                        <h2 class="slide-in-bck-top" style="color:orange">Nowa notatka</h2>
+                        <hr>
+                        <p class="fade-in">Kliknij tutaj aby napisać nową notatkę. Po napisaniu notatki pamiętaj aby
+                            zapisać twój unikalny link do notatki,
+                            w przeciwnym razie uzyskanie linku będzie możliwe tylko po skonsultowaniu się z
+                            administratorem strony.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+</th:block>
+<th:block sec:authorize="isAuthenticated()">
+    <div class="container px-4 py-5">
+        <h2 class="pb-2 border-bottom">wNotes Menu</h2>
+        <p class="text-end" th:text="'Zalogowany jako: ' + ${#authentication.name}"></p>
+        <th:block th:if="${editSuccesfull == true}">
+            <div class="alert alert-info">
+                Pomyślnie edytowano notatkę
+            </div>
+        </th:block>
+        <th:block th:if="${saveSuccesfull == true}">
+            <div class="alert alert-info">
+                Pomyślnie zapisano notatkę
+            </div>
+        </th:block>
+        <th:block th:if="${deleteSuccess == true}">
+            <div class="alert alert-info">
+                Pomyślnie usunięto notatkę
+            </div>
+        </th:block>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/new/note">
+                    <div>
+                        <h2 class="slide-in-bck-top text-center" style="color:orange">Nowa notatka</h2>
+                        <hr>
+                        <p class="fade-in text-center">Dodajesz notatkę którą pozniej będzie można dowolnie edytować w twoim
+                            panelu.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/time/note">
+                    <div>
+                        <h2 class="slide-in-bck-top text-center" style="color:orange">Notatka czasowa</h2>
+                        <hr>
+                        <p class="fade-in text-center">Dodajesz notatkę która wygaśnie po określonym przez Ciebie podczas tworzenia
+                            czasie</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/private/note">
+                    <div>
+                        <h2 class="slide-in-bck-top text-center" style="color:orange">Notatka prywatna</h2>
+                        <hr>
+                        <p class="fade-in text-center">Dodaje notatkę którą będziesz mógł odczytać tylko ty, nawet jeżeli ktoś
+                            otrzyma link do notatki to nie
+                            będzie w stanie jej odczytać.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/list/note">
+                    <div>
+                        <h2 class="slide-in-bck-top text-center" style="color:orange">Lista notatek</h2>
+                        <hr>
+                        <p class="fade-in text-center">Lista dotychczas napisanych notatek, otrzymasz tutaj pełną listę notatek wraz
+                            z linkami do udostępnienia notatki.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/account/change_password">
+                    <div>
+                        <h2 class="slide-in-bck-top text-center" style="color:darkred">Zmiana hasła</h2>
+                        <hr>
+                        <p class="fade-in text-center">Ta opcja pozwala zmienić Twoje hasło do serwisu wNotes.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical">
+                <a href="/wnotes/account/delete">
+                    <div>
+                        <h2 class="slide-in-bck-top text-center" style="color:darkred">Usuwanie konta</h2>
+                        <hr>
+                        <p class="fade-in text-center">Usuń swoje konto wraz z wszystkimi notatkami.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

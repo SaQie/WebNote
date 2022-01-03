@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options"></head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+        <form th:action="@{/wnotes/account/delete}" th:method="DELETE">
+            <h1 class="display-4 fw-bold text-center slide-in-bck-top">Usuwanie konta</h1>
+            <hr>
+            <p style="font-size: 12px" class="lead mb-4 slide-in-bck-top">Pamiętaj że po usunięciu konta nie będzie możliwości przywrócenia zapisanych notatek !</p>
+            <div class="form-floating mb-3">
+                <span th:if="${!notes.isEmpty()}" style="color: darkred" th:text="'Na koncie posiadasz zapisane notatki, sprawdz zanim wykonasz usuwanie konta, wszystkie notatki zostana utracone.'"></span>
+                <span th:if="${notes.isEmpty()}" style="color: darkred" th:text="'Na koncie nie posiadasz żadnych notatek.'"></span>
+            </div>
+            <br>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+                <button type="button" class="btn btn-danger btn-lg px-4 gap-3" data-bs-toggle="modal"
+                        data-bs-target="#saveModal">Usuń konto
+                </button>
+                <a href="/wnotes/menu">
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Anuluj</button>
+                </a>
+            </div>
+            <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-6 shadow">
+                        <div class="modal-header border-bottom-0">
+                            <h5 class="modal-title" id="saveModalLabel">Czy na pewno usunąc konto ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                            <button type="submit" class="btn btn-primary">Tak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:block>
+</div>
+</body>
+</html>

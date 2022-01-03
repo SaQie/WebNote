@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options">
+</head>
+<body>
+<header th:fragment="header" class="p-3 mb-3 border-bottom">
+    <div class="container border-bottom">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                <img src="https://i.imgur.com/NSeAfeC.png" class="bi me-2" width="40" height="32" role="img"
+                     aria-label="Bootstrap">
+            </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/home" class="nav-link px-2 link-dark">Strona główna</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Kontakt</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a href="/register" class="nav-link px-2 link-dark">Rejestracja</a></li>
+                    <li><a href="/login" class="nav-link px-2 link-dark">Logowanie</a></li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                           class="nav-link px-2 link-dark">Wyloguj się</a></li>
+                </th:block>
+            </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <div class="text-end"><a class="nav-link link-dark" href="/wnotes/menu"> wNotes</a></div>
+            </form>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-6 shadow">
+                        <div class="modal-header border-bottom-0">
+                            <h5 class="modal-title" id="exampleModalLabel">Chcesz się wylogować ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                            <a href="/logout">
+                                <button type="button" class="btn btn-primary">Tak</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</header>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options">
+</head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+    <form th:action="@{/wnotes/time/note}" method="post">
+        <h1 class="display-4 fw-bold text-center slide-in-bck-top">Notatka czasowa</h1>
+        <hr>
+        <p style="font-size: 12px" class="lead mb-4 slide-in-bck-top">Dodajesz czasową notatkę która wygaśnie po
+            określonym czasie.</p>
+        <div class="form-floating mb-3">
+            <input type="text" th:field="${noteTimeDTO.title}" class="form-control" id="floatingInput"
+                   placeholder="Tytuł notatki">
+            <label for="floatingInput">Tytuł notatki</label>
+        </div>
+        <p class="error text-danger text-center" th:errors="${noteTimeDTO.content}"></p>
+        <p class="error text-danger text-center" th:errors="${noteTimeDTO.title}"></p>
+        <p class="error text-danger text-center" th:errors="${noteTimeDTO.expiredDate}"></p>
+        <div class="shadow-lg slide-in-bck-left">
+            <textarea class="textarea-style" style="height: 400px" th:field="${noteTimeDTO.content}"></textarea>
+        </div>
+        <br>
+        <div class="form-floating mb-3">
+            <input type="date" th:field="${noteTimeDTO.expiredDate}" class="form-control" id="floatingInput2"
+                   placeholder="Data wygaśnięcia">
+            <label for="floatingInput2">Data wygaśnięcia notatki</label>
+        </div>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal"
+                    data-bs-target="#saveModal">Zapisz notatkę
+            </button>
+            <a href="/wnotes/menu">
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Anuluj</button>
+            </a>
+        </div>
+        <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-6 shadow">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="saveModalLabel">Zapisać notatkę ?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                        <button type="submit" class="btn btn-primary">Tak</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

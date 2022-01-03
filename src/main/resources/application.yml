@@ -1,0 +1,43 @@
+spring:
+  mail:
+    host: -----
+    username: -----
+    password: -----
+    port: -----
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    url: -----
+    username: -----
+    password: -----
+    driver-class-name: -----
+  jpa:
+    database: -----
+    hibernate:
+      ddl-auto: create-drop
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+hibernate:
+  highlight_sql: true
+
+
+url:
+  applicationAdress: -----
+
+
+
+

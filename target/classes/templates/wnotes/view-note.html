@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options">
+</head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+    <th:block th:if="${error == null}">
+        <h1 class="display-4 fw-bold text-center slide-in-bck-top">Odczyt notatki</h1>
+        <hr>
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg slide-in-bck-left">
+            <code class="text-center" th:text="${noteByUUID.title}"></code>
+            <span style="font-family: 'Times New Roman',sans-serif" th:utext="${noteByUUID.content}"></span>
+        </div>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+            <a href="/wnotes/menu">
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4" style="margin-top: 20px">Wróć do menu</button>
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${error != null}">
+        <h1 class="display-4 fw-bold text-center slide-in-bck-top">Odczyt notatki</h1>
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg slide-in-bck-left">
+            <span style="color:darkred; text-align: center" th:text="${error}"></span>
+            <hr>
+        </div>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+            <a href="/wnotes/menu">
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4" style="margin-top: 20px">Wróć do menu</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options">
+</head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+    <th:block th:if="${saveNoteSuccess == false}">
+        <form th:action="@{/wnotes/new/note}" method="post">
+            <h1 class="display-4 fw-bold text-center slide-in-bck-top">Nowa notatka</h1>
+            <hr>
+            <p style="font-size: 12px" class="lead mb-4 slide-in-bck-top">Po napisaniu notatki kliknij zapisz aby zapisać notatkę i uzyskać unikalny link do notatki.</p>
+            <p class="error text-danger text-center" th:errors="${noteDTO.content}"></p>
+            <p class="error text-danger text-center" th:errors="${noteDTO.title}"></p>
+            <div class="form-floating mb-3">
+                <input type="text" th:field="${noteDTO.title}" class="form-control" id="floatingInput" placeholder="Tytuł notatki">
+                <label for="floatingInput">Tytuł notatki</label>
+            </div>
+            <div class="shadow-lg slide-in-bck-left">
+                <textarea class="textarea-style" style="height: 400px" th:field="${noteDTO.content}"></textarea>
+            </div>
+            <br>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal"
+                        data-bs-target="#saveModal">Zapisz notatkę
+                </button>
+                <a href="/wnotes/menu">
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Anuluj</button>
+                </a>
+            </div>
+            <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-6 shadow">
+                        <div class="modal-header border-bottom-0">
+                            <h5 class="modal-title" id="saveModalLabel">Zapisać notatkę ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                            <button type="submit" class="btn btn-primary">Tak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:block>
+    <th:block th:if="${saveNoteSuccess == true}">
+        <h1 class="display-4 fw-bold text-center slide-in-bck-top">Nowa notatka</h1>
+        <hr>
+        <p style="font-size: 12px; color: green" class="lead mb-4 slide-in-bck-top">Pomyślnie zapisano notatkę.</p>
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg slide-in-bck-left">
+            <p class="text-center">Twój link do notatki:</p>
+            <hr>
+            <p class="error text-danger text-center" th:errors="${noteDTO.content}"></p>
+            <p class="error text-danger text-center" th:errors="${noteDTO.title}"></p>
+            <div class="text-center"><code th:text="${adress} + 'note/'+ ${noteDTO.uuid}"></code></div>
+            <p class="text-danger text-center" style="font-size: 12px">Pamiętaj aby zapisać link !</p>
+        </div>
+        <br>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+            <a th:href="${adress} + 'note/'+ ${noteDTO.uuid}">
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Zobacz notatkę</button>
+            </a>
+            <a href="/wnotes/menu">
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Wróc do menu</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>

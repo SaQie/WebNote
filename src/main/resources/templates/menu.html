@@ -1,0 +1,177 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:fragment="options">
+    <meta charset="UTF-8">
+    <title>wNotes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/home_styles.css" th:href="@{/styles/home_styles.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/x9b0uwk9hurr0g0gltpg84kef1h764q1ri2twkvjwfpwl81m/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            skin: 'outside',
+            icons: 'small',
+            toolbar_location: 'bottom',
+            plugins: 'lists code table codesample link',
+            toolbar: 'formatselect | bold italic underline strikethrough bullist link codesample align',
+            menubar: false,
+            statusbar: false
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <img src="https://i.imgur.com/NSeAfeC.png" class="bi me-2" width="40" height="32" role="img"
+                 aria-label="Bootstrap">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li><a href="/home" class="nav-link px-2 link-dark">Strona główna</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a href="/register" class="nav-link px-2 link-dark">Rejestracja</a></li>
+                    <li><a href="/login" class="nav-link px-2 link-dark">Logowanie</a></li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                           class="nav-link px-2 link-dark">Wyloguj się</a></li>
+                </th:block>
+                <li><a href="/wnotes/menu" class="nav-link px-2 link-dark">wNotes Menu</a></li>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-6 shadow">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel">Chcesz się wylogować ?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                                <a href="/logout">
+                                    <button type="button" class="btn btn-primary">Tak</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<th:block sec:authorize="isAnonymous()">
+    <div class="container px-4 py-5">
+        <h2 class="text-center">Menu</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/new/note">
+                    <div>
+                        <h2 class="slide-in-bck-top" style="color:orange">Nowa notatka</h2>
+                        <hr>
+                        <p class="fade-in">Kliknij tutaj aby napisać nową notatkę. Po napisaniu notatki pamiętaj aby
+                            zapisać twój unikalny link do notatki,
+                            w przeciwnym razie uzyskanie linku będzie możliwe tylko po skonsultowaniu się z
+                            administratorem strony.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+</th:block>
+<th:block sec:authorize="isAuthenticated()">
+    <div class="container px-4 py-5">
+        <h2 class="text-center">Menu</h2>
+        <th:block th:if="${editSuccesfull == true}">
+            <div class="alert alert-info">
+                Pomyślnie edytowano notatkę
+            </div>
+        </th:block>
+        <th:block th:if="${saveSuccesfull == true}">
+            <div class="alert alert-info">
+                Pomyślnie zapisano notatkę
+            </div>
+        </th:block>
+        <th:block th:if="${deleteSuccess == true}">
+            <div class="alert alert-info">
+                Pomyślnie usunięto notatkę
+            </div>
+        </th:block>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/new/note">
+                    <div>
+                        <h2 class="slide-in-bck-top " style="color:orange">Nowa notatka</h2>
+                        <hr>
+                        <p class="fade-in ">Dodajesz notatkę którą pozniej będzie można dowolnie edytować w twoim
+                            panelu.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/time/note">
+                    <div>
+                        <h2 class="slide-in-bck-top " style="color:orange">Notatka czasowa</h2>
+                        <hr>
+                        <p class="fade-in ">Dodajesz notatkę która wygaśnie po określonym przez Ciebie podczas tworzenia
+                            czasie</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/private/note">
+                    <div>
+                        <h2 class="slide-in-bck-top " style="color:orange">Notatka prywatna</h2>
+                        <hr>
+                        <p class="fade-in ">Dodaje notatkę którą będziesz mógł odczytać tylko ty, nawet jeżeli ktoś
+                            otrzyma link do notatki to nie
+                            będzie w stanie jej odczytać.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/list/note">
+                    <div>
+                        <h2 class="slide-in-bck-top " style="color:orange">Lista notatek</h2>
+                        <hr>
+                        <p class="fade-in ">Lista dotychczas napisanych notatek, otrzymasz tutaj pełną listę notatek wraz
+                            z linkami do udostępnienia notatki.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/account/change_password">
+                    <div>
+                        <h2 class="slide-in-bck-top " style="color:darkred">Zmiana hasła</h2>
+                        <hr>
+                        <p class="fade-in ">Ta opcja pozwala zmienić Twoje hasło do serwisu wNotes.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex align-items-start jello-vertical border">
+                <a href="/wnotes/account/delete">
+                    <div>
+                        <h2 class="slide-in-bck-top " style="color:darkred">Usuwanie konta</h2>
+                        <hr>
+                        <p class="fade-in ">Usuń swoje konto wraz z wszystkimi notatkami.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

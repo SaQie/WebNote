@@ -1,0 +1,120 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:fragment="options">
+    <meta charset="UTF-8">
+    <title>wNotes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/home_styles.css" th:href="@{/styles/home_styles.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/x9b0uwk9hurr0g0gltpg84kef1h764q1ri2twkvjwfpwl81m/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            skin: 'outside',
+            icons: 'small',
+            toolbar_location: 'bottom',
+            plugins: 'lists code table codesample link',
+            toolbar: 'formatselect | bold italic underline strikethrough bullist link codesample align',
+            menubar: false,
+            statusbar: false
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+            <img src="https://i.imgur.com/NSeAfeC.png" class="bi me-2" width="40" height="32" role="img"
+                 aria-label="Bootstrap">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li><a href="/home" class="nav-link px-2 link-dark">Strona główna</a></li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li><a href="/register" class="nav-link px-2 link-dark">Rejestracja</a></li>
+                    <li><a href="/login" class="nav-link px-2 link-dark">Logowanie</a></li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                           class="nav-link px-2 link-dark">Wyloguj się</a></li>
+                </th:block>
+                <li><a href="/wnotes/menu" class="nav-link px-2 link-dark">wNotes Menu</a></li>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content rounded-6 shadow">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalLabel">Chcesz się wylogować ?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                                <a href="/logout">
+                                    <button type="button" class="btn btn-primary">Tak</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="px-4 py-5 my-5 text-center slide-in-bck-top">
+    <img class="d-block mx-auto mb-4" src="https://i.imgur.com/NSeAfeC.png" alt="" width="72" height="57">
+    <h1 class="display-5 fw-bold">Aplikacja wNotes</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">wNotes jest aplikacją webową utworzoną z wykorzystaniem takich technologii jak : Java,
+            Spring Boot, MySQL, Bootstrap, Thymeleaf, była tworzona przez początkującego programistę do portofolio na
+            GitHub, mam nadzieję że znajdziesz tu coś dla siebie i będzie Ci się miło korzystało z wNotes czyli
+            aplikacji do notatek online.</p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg ">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3 slide-in-bck-top">
+            <h1 class="display-4 fw-bold lh-1">Zarejestruj się w serwisie wNotes</h1>
+            <p class="lead">Jeżeli nie potrzebujesz przechowywać swoich notatek w naszej bazie danych możesz pominąć ten krok, jednakże zalecamy Ci utworzenie konta, otrzymasz historię swoich notatek oraz wiele wiele więcej !</p>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+            <img class="rounded-lg-3" src="https://i.imgur.com/T2akNRF.png" alt="" width="720">
+        </div>
+    </div>
+</div>
+<div class="container col-xxl-8 px-4 py-5 ">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="https://i.imgur.com/Uwu0DQr.png" class="d-block mx-lg-auto img-fluid" alt="wNotes Login" width="700" height="500" loading="lazy">
+        </div>
+        <div class="col-lg-6 slide-in-bck-top">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Logowanie do serwisu wNotes</h1>
+            <p class="lead">Zawsze pamiętaj o logowaniu do serwisu, da Ci to dużo możliwości jeżeli chodzi o tworzenie notatek oraz ich zapis w naszej bazie danych.</p>
+        </div>
+    </div>
+</div>
+<div class="px-4 pt-5 my-5 text-center border-bottom slide-in-bck-top">
+    <h1 class="display-4 fw-bold">Menu wNotes</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Wszystkie przydatne funkcje serwisu znajdziesz na górnym pasku menu strony, pamiętaj jednak, że wszystkie funkcje zostana ci udostępnione dopiero po zalogowaniu do serwisu.</p>
+    </div>
+    <div class="overflow-hidden" style="max-height: 30vh;">
+        <div class="container px-5">
+            <img src="https://i.imgur.com/2vQ2Ve4.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+        </div>
+    </div>
+</div>
+</body>
+</html>

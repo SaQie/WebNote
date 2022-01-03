@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options"></head>
+<body class="text-center">
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-md-10 mx-auto col-lg-5 fade-in">
+            <div class="p-4 p-md-5 border rounded-3 bg-light" th:if="${enableAccountSuccess == true}">
+                <img class="mb-4" src="https://i.imgur.com/NSeAfeC.png" alt="" width="72" height="57">
+                <p class="alert text-success text-center">Pomyślnie aktywowano konto, kliknij <a href="/login">
+                    tutaj</a> aby przejść do strony logowania</p>
+            </div>
+            <div class="p-4 p-md-5 border rounded-3 bg-light" th:if="${enableAccountSuccess == null}">
+                <img class="mb-4" src="https://i.imgur.com/NSeAfeC.png" alt="" width="72" height="57">
+                <p class="alert text-danger text-center slide-in-bck-left" th:if="${error != null}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:include="/fragments/head :: options">
+</head>
+<body>
+<header th:include="/fragments/nav-bar :: header">
+</header>
+<div class="container my-5">
+    <th:block th:if="${error != null}" th:text="${error}"></th:block>
+    <th:block th:if="${error == null}">
+        <form th:action="@{/wnotes/edit}" th:method="PUT">
+            <h1 class="display-4 fw-bold text-center slide-in-bck-top">Edytowanie notatki</h1>
+            <hr>
+            <p style="font-size: 12px" class="lead mb-4 slide-in-bck-top">Edytujesz wybraną notatkę, po edycji
+                wybierz
+                opcję zapisz.</p>
+            <p class="error text-danger text-center" th:errors="${note.content}"></p>
+            <p class="error text-danger text-center" th:errors="${note.title}"></p>
+            <p class="error text-danger text-center" th:errors="${note.privateNote}"></p>
+            <p class="error text-danger text-center" th:errors="${note.expiredDate}"></p>
+            <div class="form-floating mb-3">
+                <input type="text" th:field="${note.title}" class="form-control" id="floatingInput"
+                       placeholder="Tytuł notatki">
+                <label for="floatingInput" th:text="'Stara nazwa: ' + ${note.title}"></label>
+            </div>
+            <div class="shadow-lg slide-in-bck-left">
+                    <textarea class="textarea-style" style="height: 400px" th:field="${note.content}"
+                              th:utext="${note.content}"></textarea>
+            </div>
+            <br>
+            <div class="form-floating mb-3">
+                <input type="date" th:field="${note.expiredDate}" class="form-control" id="floatingInput2" placeholder="Data wygaśnięcia">
+                <label for="floatingInput2">Data wygaśnięcia notatki</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select th:field="${note.privateNote}" class="form-control">
+                    <option value="0">Nie</option>
+                    <option value="1">Tak</option>
+                </select>
+            </div>
+            <input type="hidden" th:field="${note.uuid}" th:value="${note.uuid}">
+            <input type="hidden" th:field="${note.id}" th:value="${note.id}">
+            <input type="hidden" th:field="${note.user}" th:value="${note.user}">
+            <input type="hidden" th:field="${note.createdDate}" th:value="${note.createdDate}">
+            <br>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center slide-in-bck-left">
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal"
+                        data-bs-target="#saveModal">Zapisz notatkę
+                </button>
+                <a href="/wnotes/menu">
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Anuluj</button>
+                </a>
+            </div>
+            <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-6 shadow">
+                        <div class="modal-header border-bottom-0">
+                            <h5 class="modal-title" id="saveModalLabel">Zapisać notatkę ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+                            <button type="submit" class="btn btn-primary">Tak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:block>
+</div>
+</body>
+</html>

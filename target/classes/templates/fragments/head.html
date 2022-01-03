@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head th:fragment="options">
+    <meta charset="UTF-8">
+    <title>wNotes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/home_styles.css" th:href="@{/styles/home_styles.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/x9b0uwk9hurr0g0gltpg84kef1h764q1ri2twkvjwfpwl81m/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            skin: 'outside',
+            icons: 'small',
+            toolbar_location: 'bottom',
+            plugins: 'lists code table codesample link',
+            toolbar: 'formatselect | bold italic underline strikethrough bullist link codesample align',
+            menubar: false,
+            statusbar: false
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

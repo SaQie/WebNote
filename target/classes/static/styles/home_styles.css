@@ -1,0 +1,15 @@
+body, html {
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: white;
+}
+a, a:active, a:link, a:hover, a:visited{
+    text-decoration: none;
+    color: black;
+}
+
+.textarea-style{
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
