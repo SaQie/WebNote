@@ -3,7 +3,7 @@ Web notes application
 
 <b>I used Java, Spring boot, PostgreSQL, Thymeleaf, Bootstrap, html, css</b>
 
-**Try this app on heroku** <a href="https://wnotess.herokuapp.com">Notes app</a>
+**Try this app on heroku** <a href="https://wnotess.herokuapp.com">Notes app</a> Login: polak Password: polak
 
 **Functions**
 
